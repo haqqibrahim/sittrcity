@@ -146,6 +146,20 @@
         </div>
 
         <div class="mt-4">
+          <label for="aboutYou" class="block text-sm font-medium text-gray-600">
+            Help us know you
+          </label>
+          <textarea
+            id="aboutYou"
+            name="aboutYou"
+            rows="4"
+            placeholder="Tell us about yourself, your experience, and why you want to be a sitter..."
+            class="mt-1 p-2 w-full border rounded-md resize-none"
+            required
+          ></textarea>
+        </div>
+
+        <div class="mt-4">
           <label
             for="frontPicture"
             class="block text-sm font-medium text-gray-600"
@@ -343,7 +357,7 @@
         }
 
         // Redirect after successful submission
-        window.location.replace("https://identity-id.vercel.app/");
+        window.location.replace("/form2.html");
       }
 
       async function sendFormData(formData) {

